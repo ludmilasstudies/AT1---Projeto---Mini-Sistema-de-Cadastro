@@ -10,7 +10,9 @@ int codigo[20];
 
     int total = 0;
     int opcao;
-    int i;
+    int i, j;
+    int codigoBusca;
+    int posicao;
 
     do {
         printf("\n===== CADASTRO DE LIVROS =====");
@@ -44,7 +46,24 @@ int codigo[20];
                 }
                 break;
             case 2:
-                printf("\nConsultar\n");
+                 printf("\nInforme o codigo do livro: ");
+                scanf("%d", &codigoBusca);
+
+                posicao = -1;
+                for (i = 0; i < total; i++) {
+                    if (codigo[i] == codigoBusca) {
+                        posicao = i;
+                    }
+                }
+
+                if (posicao == -1) {
+                    printf("\nRegistro nao encontrado.\n");
+                } else {
+                    printf("\nCodigo: %d", codigo[posicao]);
+                    printf("\nTitulo: %s", titulo[posicao]);
+                    printf("\nAutor: %s", autor[posicao]);
+                    printf("\nAno: %d\n", ano[posicao]);
+                }
                 break;
             case 3:
                 if (total == 0) {
@@ -59,10 +78,57 @@ int codigo[20];
                 }
                 break;
             case 4:
-                printf("\nAlterar\n");
+                printf("\nInforme o codigo do livro a alterar: ");
+                scanf("%d", &codigoBusca);
+
+                posicao = -1;
+                for (i = 0; i < total; i++) {
+                    if (codigo[i] == codigoBusca) {
+                        posicao = i;
+                    }
+                }
+
+                if (posicao == -1) {
+                    printf("\nRegistro nao encontrado.\n");
+                } else {
+                    printf("Novo titulo (use _ no lugar dos espacos): ");
+                    scanf("%s", titulo[posicao]);
+                    printf("Novo autor (use _ no lugar dos espacos): ");
+                    scanf("%s", autor[posicao]);
+                    printf("Novo ano: ");
+                    scanf("%d", &ano[posicao]);
+
+                    printf("\nLivro alterado com sucesso!\n");
+                }
                 break;
             case 5:
-                printf("\nExcluir\n");
+                printf("\nInforme o codigo do livro a excluir: ");
+                scanf("%d", &codigoBusca);
+
+                posicao = -1;
+                for (i = 0; i < total; i++) {
+                    if (codigo[i] == codigoBusca) {
+                        posicao = i;
+                    }
+                }
+
+                if (posicao == -1) {
+                    printf("\nNao foi possivel excluir.\n");
+                } else {
+                    for (i = posicao; i < total - 1; i++) {
+                        codigo[i] = codigo[i + 1];
+                        ano[i] = ano[i + 1];
+
+                        for (j = 0; j < 50; j++) {
+                            titulo[i][j] = titulo[i + 1][j];
+                            autor[i][j] = autor[i + 1][j];
+                        }
+                    }
+
+                    total--;
+
+                    printf("\nLivro excluido com sucesso!\n");
+                }
                 break;
             case 0:
                 printf("\nEncerrando o sistema...\n");
